@@ -7,6 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import sorting.AbstractSorting;
+import sorting.divideAndConquer.MergeSort;
+
 
 public class StudentSortingTest {
 
@@ -26,20 +28,23 @@ public class StudentSortingTest {
 				11, 18, 36 });
 		populaVetorRepetido(new Integer[] { 4, 9, 3, 4, 0, 5, 1, 4 });
 		populaVetorIgual(new Integer[] { 6, 6, 6, 6, 6, 6 });
-
+		
+		
+		
+		
 		getImplementation();
 	}
 
-	// // MÃ‰TODOS AUXILIARES DA INICIALIZAÃ‡ÃƒO
+	// // MÉTODOS AUXILIARES DA INICIALIZAÇÃO
 	/**
-	 * MÃ©todo que inicializa a implementaÃ§Ã£o a ser testada com a implementaÃ§Ã£o
+	 * Método que inicializa a implementação a ser testada com a implementação
 	 * do aluno
 	 */
 	private void getImplementation() {
-		// TODO O aluno deve instanciar sua implementaÃ§Ã£o abaixo ao invÃ©s de
+		// TODO O aluno deve instanciar sua implementação abaixo ao invés de
 		// null
-		this.implementation = null;
-		Assert.fail("Implementation not provided");
+		this.implementation = new MergeSort<Integer>();
+		//Assert.fail("Implementation not provided");
 	}
 
 	public void populaVetorTamanhoPar(Integer[] arrayPadrao) {
@@ -60,9 +65,9 @@ public class StudentSortingTest {
 				.copyOf(arrayPadrao, arrayPadrao.length);
 	}
 
-	// FIM DOS METODOS AUXILIARES DA INICIALIZAÃ‡ÃƒO
+	// FIM DOS METODOS AUXILIARES DA INICIALIZAÇÃO
 
-	// MÃ‰TODOS DE TESTE
+	// MÉTODOS DE TESTE
 
 	public void genericTest(Integer[] array) {
 		Integer[] copy1 = {};
@@ -99,11 +104,77 @@ public class StudentSortingTest {
 		genericTest(vetorValoresRepetidos);
 	}
 
-	// MÃ‰TODOS QUE OS ALUNOS PODEM CRIAR
+	// MÉTODOS QUE OS ALUNOS PODEM CRIAR
 	/**
-	 * O ALUNO PODE IMPLEMENTAR METODOS DE ORDENAÃ‡ÃƒO TESTANDO O SORT COM TRES
-	 * ARGUMENTOS PARA TESTAR A ORDENACAO EM UM PEDAÃ‡O DO ARRAY. DICA: PROCUREM
-	 * SEGUIR A ESTRUTURA DOS MÃ‰TODOS DE TESTE ACIMA DESCRITOS, ORDENANDO APENAS
+	 * O ALUNO PODE IMPLEMENTAR METODOS DE ORDENAÇÃO TESTANDO O SORT COM TRES
+	 * ARGUMENTOS PARA TESTAR A ORDENACAO EM UM PEDAÇO DO ARRAY. DICA: PROCUREM
+	 * SEGUIR A ESTRUTURA DOS MÉTODOS DE TESTE ACIMA DESCRITOS, ORDENANDO APENAS
 	 * UMA PARTE DO ARRAY.
 	 */
+	
+	
+	@Test
+	public void testUltimoElementoNoFinal() {
+		Integer[] array = {9, 8, 7, 6, 5, 1};
+		Integer[] arraySorted = {1, 5, 6, 7, 8, 9};
+		implementation.sort(array, 0, 5);
+		Assert.assertArrayEquals(arraySorted, array);
+	}
+	
+	@Test
+	public void testUltimoElementoNoFinalSlice() {
+		Integer[] array = {9, 8, 7, 6, 5, 1};
+		Integer[] arraySorted = {5, 6, 7, 8, 9, 1};
+		implementation.sort(array, 0, 4);
+		Assert.assertArrayEquals(arraySorted, array);
+	}
+	
+	@Test
+	public void testUltimoElementoNoFinalSlice2() {
+		Integer[] array = {9, 8, 7, 6, 5, 1};
+		Integer[] arraySorted = {9, 5, 6, 7, 8, 1};
+		implementation.sort(array, 1, 4);
+		Assert.assertArrayEquals(arraySorted, array);
+	}
+	
+	
+	@Test
+	public void testIndexInvalidos() {
+		Integer[] array = {9, 8, 7, 6, 5, 1};
+		Integer[] arrayExpected = {9, 8, 7, 6, 5, 1};
+		implementation.sort(array, 6, 9);
+		Assert.assertArrayEquals(arrayExpected, array);
+	}
+	
+	@Test
+	public void testLeftIndexInvalido() {
+		Integer[] array = {9, 8, 7, 6, 5, 1};
+		Integer[] arrayExpected = {9, 8, 7, 6, 5, 1};
+		implementation.sort(array, 6, 0);
+		Assert.assertArrayEquals(arrayExpected, array);
+	}
+	
+	@Test
+	public void testRightIndexInvalido() {
+		Integer[] array = {9, 8, 7, 6, 5, 1};
+		Integer[] arrayExpected = {9, 8, 7, 6, 5, 1};
+		implementation.sort(array, 0, 6);
+		Assert.assertArrayEquals(arrayExpected, array);
+	}
+	
+	@Test
+	public void testArrayAleatorio() {
+		Integer[] array = {32, 24, 79, 125, 20, 3, 72, 124, 475, 2303, 11};
+		Integer[] arraySorted = {3, 11, 20, 24, 32, 72, 79, 124, 125, 475, 2303};
+		implementation.sort(array, 0, 10);
+		Assert.assertArrayEquals(arraySorted, array);
+	}
+	
+	@Test
+	public void testArrayIsAlreadySorted() {
+		Integer[] array = {3, 11, 20, 24, 32, 72, 79, 124, 125, 475, 2303};
+		Integer[] arraySorted = {3, 11, 20, 24, 32, 72, 79, 124, 125, 475, 2303};
+		implementation.sort(arraySorted, 0, 10);
+		Assert.assertArrayEquals(arraySorted, array);
+	}
 }
